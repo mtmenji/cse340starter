@@ -228,3 +228,18 @@ VALUES   (
     'White',
     5
   );
+
+-- Update GM Hummer description
+UPDATE
+	inventory
+SET
+	inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior')
+WHERE
+	inv_model = 'Hummer'
+
+-- Replace '/images/' with '/images/vehicles/' in the inv_image and inv_thumbnail columns
+UPDATE
+    inventory
+SET
+    inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
+    inv_thumbnail = REPLACE(inv_thumbnail, 'images', 'images/vehicles/')
