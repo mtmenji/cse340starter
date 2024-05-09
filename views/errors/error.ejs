@@ -1,0 +1,13 @@
+<%# Content Heading - Checks to see if there is a "title" variable. If yes, it will make that variable the <h1> tag. %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+
+
+
+<%# Message Block - A message will appear in case of error.%>
+<% if (message) { %>
+    <p><%= message %></p>
+<% } %>
