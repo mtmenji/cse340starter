@@ -44,6 +44,7 @@ header div {
   padding-right: 10px;
 }
 
+
 /***** Navigation *****/
 nav {
   width: 100%;
@@ -51,7 +52,9 @@ nav {
 }
 nav ul {
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
   background-color: black;
   color: white;
   list-style-type: none;
@@ -62,6 +65,7 @@ nav ul li {
   padding: 10px 0 10px 0;
 }
 
+/****************************** HOME PAGE ******************************/
 /***** Hero Section *****/
 main h1 {
   padding-left: 10px;
@@ -141,12 +145,32 @@ main h1 {
   flex-grow: 1;
 }
 
+/****************************** GRID PAGES ******************************/
+#inv-display {
+  padding: 0;
+  margin: 0 3px 0 3px;
+  display: grid;
+}
+#inv-display li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid black;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0 3px 3px 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+
+
+
 /***** Footer *****/
 footer {
   padding-left: 10px;
   padding-top: 25px;
 }
-
 
 /***** Larger Views *****/
 @media (min-width: 641px) {
@@ -165,11 +189,21 @@ nav {
 nav ul {
   padding: 0 10% 0 10%;
   justify-content: space-between;
+  flex-direction: row;
 }
+
+/****************************** HOME PAGE ******************************/
 #hero {
   grid-template-columns: 25% 25% 25%;
 }
 #features {
   grid-template-columns: 1fr 1fr;
 }
+
+
+/****************************** GRID PAGES ******************************/
+#inv-display {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 }
