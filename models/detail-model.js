@@ -13,7 +13,7 @@ async function getClassifications(){
 async function getDetailByInvId(inv_id) {
     try {
       const data = await pool.query(
-        `SELECT * FROM public.inventory`
+        `SELECT * FROM public.inventory WHERE inv_id = $1`, [inv_id]
       )
       return data.rows
     } catch (error) {
@@ -21,4 +21,4 @@ async function getDetailByInvId(inv_id) {
     }
   }
 
-  module.exports = {getDetailByInvId};
+  module.exports = {getClassifications, getDetailByInvId};
