@@ -30,6 +30,9 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
+app.get("/generate-error", (req, res, next) => {
+  throw new Error ('Intentional 500 error');
+})
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
@@ -57,7 +60,19 @@ app.use(async (err, req, res, next) => {
     message,
     nav
   })
+  next();
 })
+
+/* ***********************
+* Express Error Handler (500 ERROR)
+*************************/
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Intentional error!');
+})
+
+
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
