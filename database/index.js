@@ -13,6 +13,11 @@ if (process.env.NODE_ENV == "development") {
     ssl: {
       rejectUnauthorized: false,
     },
+  else: {
+    ssl: {
+      rejectUnauthorized: true
+    }
+  }
 })
 
 // Added for troubleshooting queries
