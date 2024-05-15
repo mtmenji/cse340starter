@@ -19,6 +19,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     title: className + " vehicles",
     nav,
     grid,
+    error: null,
   })
 }
 

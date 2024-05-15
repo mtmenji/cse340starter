@@ -15,6 +15,7 @@ detCont.buildByInvId = async function (req, res, next) {
     title: "Details",
     nav,
     grid,
+    error: null,
   })
 }
 
