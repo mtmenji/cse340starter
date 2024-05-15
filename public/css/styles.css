@@ -181,7 +181,41 @@ main h1 {
   width: 90%;
 }
 
-/***** Footer *****/
+/****************************** Signin Form ******************************/
+#signin-form {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin: 0 auto;
+  border-style: outset;
+  border-radius: 10px;
+  background-color: rgb(19, 69, 161);
+  color: white;
+  padding: 15px 25px 15px 25px;
+}
+
+#signin-form input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+#login {
+  width: 20%;
+  align-self: center;
+}
+
+#signin-form p {
+  text-align: center;
+}
+
+#signin-form p a {
+  text-decoration: underline;
+}
+
+
+
+/****************************** FOOTER ******************************/
 footer {
   padding-left: 10px;
   padding-top: 25px;
@@ -240,6 +274,11 @@ nav ul {
 #more-details {
   grid-column: 2/3;
   grid-row: 2/3;
+}
+
+/****************************** Signin Form ******************************/
+#signin-form {
+  max-width: 60%;
 }
 
 }

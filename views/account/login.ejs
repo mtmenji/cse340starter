@@ -1,0 +1,11 @@
+<title><%= title %></title>
+<%- messages() %>
+<form id="signin-form">
+    <h1><%= title %></h1>
+    <label for="email">Email:</label>
+    <input type="email" name="email">
+    <label for="password">Password:</label>
+    <input type="password" name="password">
+    <input id="login" type="submit" value="LOGIN">
+    <p>No account? <a href="/account/registration">Sign-up</a></p>
+</form>
