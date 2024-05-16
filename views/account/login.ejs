@@ -1,9 +1,9 @@
 <title><%= title %></title>
 <%- messages() %>
-<form id="signin-form">
+<form id="signin-form" action="/account/login" method="post">
     <h1><%= title %></h1>
     <label for="email">Email:</label>
-    <input type="email" name="email" required>
+    <input type="email" name="email" id="accountEmail" required value="<%= locals.account_email %>">
     <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
     <label for="password">Password:</label>
     <input type="password" name="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
