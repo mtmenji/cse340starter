@@ -84,6 +84,74 @@ Util.buildDetailGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the management view HTML
+* ************************************ */
+Util.buildManagementGrid = async function(){
+  let grid
+  grid = '<section id="management-section"><div id="management-div">'
+  grid += '<ul><li><a href="">Add New Classification</a></li>'
+  grid += '<li><a href="">Add New Inventory</a></li></ul></div></section>'
+  return grid
+}
+
+/* **************************************
+* Build the add classification view HTML
+* ************************************ */
+Util.buildAddClassificationGrid = async function(){
+  let grid
+  grid = '<section id="addClassification-section"><form>'
+  grid += '<label for="classification">Add Classification:</label>'
+  grid += '<input type="text" id="classification" name="classification"></input>'
+  grid += '<span>Note: You can not use spaces or special characters.</span>'
+  grid += '<button type="submit">SUBMIT</button>'
+  grid += '</form></section>'
+  return grid
+}
+
+/* **************************************
+* Build the classification list drop down
+* ************************************ */
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList
+}
+
+/* **************************************
+* Build the add inventory view HTML
+* ************************************ */
+Util.buildAddInventoryGrid = async function(){
+  let grid
+  grid = '<section id="addInventory-section"><form>'
+  grid += '<label for="make">Enter Make:</label><input type="text" id="make" name="make"></input>'
+  grid += '<label for="make">Enter Model:</label><input type="text" id="model" name="model"></input>'
+  grid += '<label for="make">Enter Year:</label><input type="number" id="year" name="year" maxLength="4"></input>'
+  grid += '<label for="make">Enter Description:</label><textarea id="description" name="description" rows="4" cols="50"></textarea>'
+  grid += '<label for="make">Image Path:</label><input type="text" id="image" name="image" value="/images/vehicles/no-image.png"></input>'
+  grid += '<label for="make">Thumbnail Path:</label><input type="text" id="thumbnail" name="thumbnail" value="/images/vehicles/no-image.png"></input>'
+  grid += '<label for="make">Enter Price:</label><input type="number" id="price" name="price"></input>'
+  grid += '<label for="make">Enter Miles:</label><input type="number" id="miles" name="miles"></input>'
+  grid += '<label for="make">Enter Color:</label><input type="text" id="color" name="color"></input>'
+  grid += '<button type="submit">SUBMIT</button>'
+  grid += '</form></section>'
+
+  return grid
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

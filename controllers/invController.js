@@ -23,4 +23,48 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build management view
+ * ************************** */
+invCont.buildManagementView = async function (req, res, next) {
+  const grid = await utilities.buildManagementGrid()
+  let nav = await utilities.getNav()
+  res.render("./inventory/classification", {
+    title: "Management View",
+    nav,
+    grid,
+    error: null,
+  })
+}
+
+/* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.buildAddClassificationView = async function (req, res, next) {
+  const grid = await utilities.buildAddClassificationGrid()
+  let nav = await utilities.getNav()
+  res.render("./inventory/classification", {
+    title: "Add Classification",
+    nav,
+    grid,
+    error: null,
+  })
+}
+
+/* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.buildAddInventoryView = async function (req, res, next) {
+  const grid = await utilities.buildAddInventoryGrid()
+  const dropDownSelect = await utilities.buildClassificationList()
+  let nav = await utilities.getNav()
+  res.render("./inventory/classification", {
+    title: "Add Inventory",
+    nav,
+    grid,
+    dropDownSelect,
+    error: null,
+  })
+}
+
 module.exports = invCont

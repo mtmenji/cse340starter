@@ -4,7 +4,7 @@ const utilities = require("../utilities/")
 const detCont = {}
 
 /* ***************************
- *  Build inventory by classification view
+ *  Build inventory by detail view
  * ************************** */
 detCont.buildByInvId = async function (req, res, next) {
   const inv_id = req.params.invId
