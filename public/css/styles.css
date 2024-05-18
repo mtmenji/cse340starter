@@ -266,6 +266,34 @@ main h1 {
   margin: 10px 0 10px 0;
 }
 
+/****************************** Add Inventory View ******************************/
+#addInventory-section {
+  display: flex;
+  justify-content: center;
+}
+
+#addInventory-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid black;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  font-size: 20px;
+  width: 90%;
+}
+
+#addInventory-section form > textarea, select {
+  width: 90%;
+  margin: 10px 0 10px 0;
+}
+
+#addInventory-section form > button {
+  width: 50%;
+  margin: 10px 0 10px 0;
+}
 
 /****************************** FOOTER ******************************/
 footer {

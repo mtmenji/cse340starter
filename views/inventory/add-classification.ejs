@@ -1,5 +1,8 @@
-<title>Add New Classification</title>
-
-<%- message() %>
-
-<%- grid %>
+<section id="addClassification-section">
+    <form>
+        <label for="classification">Add Classification:</label>
+        <input type="text" id="classification" name="classification" pattern="[A-Za-z0-9]+" required></input>
+        <span>Note: You can not use spaces or special characters.</span>
+        <button type="submit">SUBMIT</button>
+    </form>
+</section>

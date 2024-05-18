@@ -27,12 +27,10 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build management view
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
-  const grid = await utilities.buildManagementGrid()
   let nav = await utilities.getNav()
-  res.render("./inventory/classification", {
+  res.render("./inventory/management", {
     title: "Management View",
     nav,
-    grid,
     error: null,
   })
 }
@@ -41,28 +39,24 @@ invCont.buildManagementView = async function (req, res, next) {
  *  Build add classification view
  * ************************** */
 invCont.buildAddClassificationView = async function (req, res, next) {
-  const grid = await utilities.buildAddClassificationGrid()
   let nav = await utilities.getNav()
-  res.render("./inventory/classification", {
+  res.render("./inventory/add-classification", {
     title: "Add Classification",
     nav,
-    grid,
     error: null,
   })
 }
 
 /* ***************************
- *  Build add classification view
+ *  Build add inventory view
  * ************************** */
 invCont.buildAddInventoryView = async function (req, res, next) {
-  const grid = await utilities.buildAddInventoryGrid()
-  const dropDownSelect = await utilities.buildClassificationList()
   let nav = await utilities.getNav()
-  res.render("./inventory/classification", {
+  let select = await utilities.buildClassificationList()
+  res.render("./inventory/add-inventory", {
     title: "Add Inventory",
     nav,
-    grid,
-    dropDownSelect,
+    select,
     error: null,
   })
 }
