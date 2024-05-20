@@ -141,8 +141,8 @@ invCont.addInventory = async function (req, res) {
     })
   } else {
     req.flash("notice", "Sorry, the new inventory addition failed.")
-    res.status(501).render("inventory/management", {
-      title: "Management View",
+    res.status(501).render("inventory/add-inventory", {
+      title: "Add Inventory",
       nav,
       errors: null,
     })

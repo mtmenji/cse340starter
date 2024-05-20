@@ -87,16 +87,16 @@ Util.buildDetailGrid = async function(data){
 /* **************************************
 * Build the classification list drop down
 * ************************************ */
-Util.buildClassificationList = async function (classification_id = null) {
+Util.buildClassificationList = async function (classification_id = null, classification_name = null) {
   let data = await invModel.getClassifications()
   let classificationList =
-    '<select name="classification_id" id="classificationList" value="<%= locals.classification %>" required>'
+    '<select name="classification_id" id="classificationList" required>'
   classificationList += "<option value=''>Choose a Classification</option>"
   data.rows.forEach((row) => {
     classificationList += '<option value="' + row.classification_id + '"'
     if (
-      classification_id != null &&
-      row.classification_id == classification_id
+      (classification_id != null && row.classification_id == classification_id) ||
+      (classification_name != null && row.classification_name === classification_name)
     ) {
       classificationList += " selected "
     }

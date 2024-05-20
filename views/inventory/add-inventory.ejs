@@ -1,6 +1,17 @@
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
 <section id="addInventory-section">
     <form action="/inv/add-inventory" method="post">
         <%- select %>
+        <input type="hidden" name="classification" value="<%= locals.classification %>">
         <label for="make">Enter Make:</label>
         <input type="text" id="make" name="inv_make" value="<%= locals.make %>" required pattern="[A-Za-z]+"></input>
         <label for="model">Enter Model:</label>
@@ -23,11 +34,3 @@
         <button type="submit">SUBMIT</button>
     </form>
 </section>
-
-<% if (errors) { %>
-    <ul class="notice">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
-<% } %>

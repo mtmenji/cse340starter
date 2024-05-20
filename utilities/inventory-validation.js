@@ -13,42 +13,42 @@ validate.inventoryRules = () => {
         .notEmpty()
         .isLength({ min: 1 })
         .isAlpha()
-        .withMessage("Please only use letters."),
+        .withMessage("Please only use letters for the make."),
         body("inv_model")
         .trim()
         .escape()
         .notEmpty()
         .isLength({ min: 1 })
         .isAlpha()
-        .withMessage("Please only use letters."),
+        .withMessage("Please only use letters for the model."),
         body("inv_year")
         .trim()
         .escape()
         .notEmpty()
         .isLength({ min: 1 })
         .isNumeric()
-        .withMessage("Please only use numbers."),
+        .withMessage("Please only use numbers for the year."),
         body("inv_price")
         .trim()
         .escape()
         .notEmpty()
         .isLength({ min: 1 })
         .isNumeric()
-        .withMessage("Please only use numbers."),
+        .withMessage("Please only use numbers for the price."),
         body("inv_miles")
         .trim()
         .escape()
         .notEmpty()
         .isLength({ min: 1 })
         .isNumeric()
-        .withMessage("Please only use numbers."),
+        .withMessage("Please only use numbers for the mileage."),
         body("inv_color")
         .trim()
         .escape()
         .notEmpty()
         .isLength({ min: 1 })
         .isAlpha()
-        .withMessage("Please only use letters."),
+        .withMessage("Please only use letters for the color."),
     ]
   }
 
@@ -61,7 +61,7 @@ validate.checkInventoryData = async (req, res, next) => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
-      let select = await utilities.buildClassificationList()
+      let select = await utilities.buildClassificationList(classification_id, null)
       res.render("inventory/add-inventory", {
         errors,
         title: "Add Inventory",
