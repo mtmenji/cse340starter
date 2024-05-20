@@ -10,7 +10,7 @@ async function registerAccount(account_firstname, account_lastname, account_emai
     } catch (error) {
       return error.message
     }
-  }
+}
 
 /* **********************
  *   Check for existing email

@@ -1,8 +1,16 @@
 <section id="addClassification-section">
-    <form>
+    <form action="/inv/add-classification" method="post">
         <label for="classification">Add Classification:</label>
-        <input type="text" id="classification" name="classification" pattern="[A-Za-z0-9]+" required></input>
+        <input type="text" id="classification" name="classification_name" pattern="[A-Za-z0-9]+" required></input>
         <span>Note: You can not use spaces or special characters.</span>
         <button type="submit">SUBMIT</button>
     </form>
 </section>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
