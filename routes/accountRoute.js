@@ -8,8 +8,11 @@ const router = new express.Router()
 const index = require("../utilities/index")
 const accountController = require("../controllers/accountController")
 
+
+router.get("/", accountController.buildAccountManagement);
 router.get("/login", accountController.buildLogin);
 router.get("/registration", accountController.buildRegistration);
+
 // Process the registration data
 router.post(
     "/registration",
@@ -21,9 +24,11 @@ router.post(
 // Process the login attempt
 router.post(
   "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+  (req, res, next) => {
+    console.log("Request body:", JSON.stringify(req.body, null, 2));
+    next();
+  },
+  utilities.handleErrors(accountController.accountLogin)
 )
 
 module.exports = router;

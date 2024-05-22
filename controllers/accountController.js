@@ -2,8 +2,8 @@ const index = require("../utilities/index")
 const utilities = require("../utilities/")
 const accModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
-
-
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ****************************************
 *  Deliver login view
@@ -23,6 +23,18 @@ async function buildLogin(req, res, next) {
 async function buildRegistration(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/registration", {
+    title: "Registration",
+    nav,
+    errors: null,
+  })
+}
+
+/* ****************************************
+*  Deliver account management view
+* *************************************** */
+async function buildAccountManagement(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/accountManagement", {
     title: "Registration",
     nav,
     errors: null,
@@ -75,4 +87,38 @@ async function registerAccount(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegistration, registerAccount }
+/* ****************************************
+ *  Process login request
+ * ************************************ */
+async function accountLogin(req, res) {
+  let nav = await utilities.getNav()
+  const { email, password } = req.body
+  console.log(`TEST TEST TEST 5: ${email}`)
+  const accountData = await accModel.getAccountByEmail(email)
+  if (!accountData) {
+   req.flash("notice", "Please check your credentials and try again.")
+   res.status(400).render("account/login", {
+    title: "Login",
+    nav,
+    errors: null,
+    email,
+   })
+  return
+  }
+  try {
+   if (await bcrypt.compare(password, accountData.account_password)) {
+   delete accountData.account_password
+   const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 })
+   if(process.env.NODE_ENV === 'development') {
+     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+     } else {
+       res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+     }
+   return res.redirect("/account/")
+   }
+  } catch (error) {
+   return new Error('Access Forbidden')
+  }
+ }
+
+module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin }
