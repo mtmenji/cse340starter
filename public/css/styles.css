@@ -324,6 +324,35 @@ main h1 {
   margin: 10px 0 10px 0;
 }
 
+/****************************** Delete Inventory View ******************************/
+#deleteInventory-section {
+  display: flex;
+  justify-content: center;
+}
+
+#deleteInventory-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid black;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  font-size: 20px;
+  width: 90%;
+}
+
+#deleteInventory-section form > textarea, select {
+  width: 90%;
+  margin: 10px 0 10px 0;
+}
+
+#deleteInventory-section form > button {
+  width: 50%;
+  margin: 10px 0 10px 0;
+}
+
 /****************************** FOOTER ******************************/
 footer {
   padding-left: 10px;
