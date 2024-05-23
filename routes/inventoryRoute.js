@@ -15,6 +15,7 @@ router.get("/add-classification", invController.buildAddClassificationView);
 router.get("/add-inventory", invController.buildAddInventoryView);
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 router.get("/edit/:invId", utilities.handleErrors(invController.buildEditInventoryView)) //Edit Inventory Page
+router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteInventoryView)) //Delete inventory item
 
 
 // Process the classification addition
@@ -38,6 +39,9 @@ router.post(
     regValidate1.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
-
+// Process the inventory delete
+router.post(
+    '/delete-confirm/',
+    utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;

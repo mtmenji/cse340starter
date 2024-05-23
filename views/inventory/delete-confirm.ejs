@@ -1,0 +1,27 @@
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<section id="deleteInventory-section">
+    <form action="/inv/delete-confirm" method="post" id="deleteForm">
+        <label for="make">Enter Make:</label>
+        <input type="text" id="make" name="inv_make" value="<%= locals.make %>" required pattern="[A-Za-z]+" readonly></input>
+        <label for="model">Enter Model:</label>
+        <input type="text" id="model" name="inv_model" value="<%= locals.model %>" required pattern="[A-Za-z]+" readonly></input>
+        <label for="year">Enter Year:</label>
+        <input type="number" id="year" name="inv_year" maxLength="4" value="<%= locals.year %>" required readonly></input>
+        <label for="price">Enter Price:</label>
+        <input type="number" id="price" name="inv_price" value="<%= locals.price %>"  required readonly></input>
+        <p>Confirm Deletion - The delete is permanent.</p>
+        <button type="submit">Delete Vehicle</button>
+        <input type="hidden" name="inv_id"
+        <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
+    </form>
+</section>

@@ -169,6 +169,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
  * ************************** */
 invCont.buildEditInventoryView = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
+  console.log(`TEST99: ${inv_id}`)
   let nav = await utilities.getNav()
   let itemData = await invModel.getDetailByInvId(inv_id)
   itemData = itemData[0]
@@ -246,6 +247,61 @@ invCont.updateInventory = async function (req, res, next) {
       inv_miles,
       inv_color,
       classification_id
+    })
+  }
+}
+
+/* ***************************
+ *  Build delete inventory view
+ * ************************** */
+invCont.buildDeleteInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.invId)
+  let nav = await utilities.getNav()
+  let itemData = await invModel.getDetailByInvId(inv_id)
+  itemData = itemData[0]
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/delete-confirm", {
+    title: "Edit " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    make: itemData.inv_make,
+    model: itemData.inv_model,
+    year: itemData.inv_year,
+    price: itemData.inv_price,
+  })
+}
+
+/* ****************************************
+*  Process Delete Inventory
+* *************************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  //const inv_id = parseInt(req.params.invId)
+  const {inv_id} = req.body
+  console.log(`TEST 103: ${inv_id}`)
+  let nav = await utilities.getNav()
+  let classificationSelect = await utilities.buildClassificationList()
+
+
+  const deleteResult = await invModel.deleteInventory(inv_id)
+
+  if (deleteResult) {
+    req.flash(
+      "notice",
+      `The delete was successful.`
+    )
+    res.status(201).render("inventory/management", {
+      title: "Management View",
+      nav,
+      classificationSelect,
+      errors: null})
+  } else {
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).render("./inventory/delete-confirm", {
+      title: "Delete Inventory",
+      nav,
+      errors: null,
+      inv_id
     })
   }
 }
