@@ -13,6 +13,9 @@ router.get("/detail/:invId", invController.buildByInvId);
 router.get("/", invController.buildManagementView);
 router.get("/add-classification", invController.buildAddClassificationView);
 router.get("/add-inventory", invController.buildAddInventoryView);
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/edit/:invId", utilities.handleErrors(invController.buildEditInventoryView)) //Edit Inventory Page
+
 
 // Process the classification addition
 router.post(
@@ -27,6 +30,13 @@ router.post(
     regValidate1.inventoryRules(),
     regValidate1.checkInventoryData,
     utilities.handleErrors(invController.addInventory))
+
+// Process the inventory update
+router.post(
+    '/edit-inventory/',
+    regValidate1.inventoryRules(),
+    regValidate1.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory))
 
 
 

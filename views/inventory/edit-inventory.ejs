@@ -1,0 +1,41 @@
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<section id="editInventory-section">
+    <form action="/inv/edit-inventory" method="post" id="updateForm">
+        <%- select %>
+        <input type="hidden" name="classification" value="<%= locals.classification %>">
+        <label for="make">Enter Make:</label>
+        <input type="text" id="make" name="inv_make" value="<%= locals.make %>" required pattern="[A-Za-z]+"></input>
+        <label for="model">Enter Model:</label>
+        <input type="text" id="model" name="inv_model" value="<%= locals.model %>" required pattern="[A-Za-z]+"></input>
+        <label for="year">Enter Year:</label>
+        <input type="number" id="year" name="inv_year" maxLength="4" value="<%= locals.year %>" required></input>
+        <label for="description">Enter Description:</label>
+        <textarea id="description" name="inv_description" rows="4" required><%= locals.description %></textarea>
+        <label for="image">Image Path:</label>
+        <input type="text" id="image" name="inv_image" value="/images/vehicles/no-image.png" required></input>
+        <label for="thumbnail">Thumbnail Path:</label>
+        <input type="text" id="thumbnail" name="inv_thumbnail" value="/images/vehicles/no-image.png" required></input>
+        <label for="price">Enter Price:</label>
+        <input type="number" id="price" name="inv_price" value="<%= locals.price %>"  required></input>
+        <label for="miles">Enter Miles:</label>
+        <input type="number" id="miles" name="inv_miles" value="<%= locals.miles %>" required ></input>
+        <label for="color">Enter Color:</label>
+        <input type="text" id="color" name="inv_color" value="<%= locals.color %>" required pattern="[A-Za-z]+"></input>
+        <span>** Make, Model, and Color can only contain letters. **</span>
+        <button type="submit" disabled>Update Vehicle</button>
+        <input type="hidden" name="inv_id"
+        <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
+    </form>
+</section>
+
+<script src="../../js/inv-update.js"></script>

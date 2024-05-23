@@ -1,17 +1,16 @@
-const utilities = require("../utilities/")
-const regValidate = require('../utilities/account-validation')
-
-
 // Needed Resources 
 const express = require("express")
 const router = new express.Router()
-const index = require("../utilities/index")
+const utilities = require("../utilities/")
 const accountController = require("../controllers/accountController")
+const regValidate = require('../utilities/account-validation')
 
 
-router.get("/", accountController.buildAccountManagement);
+
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement));
 router.get("/login", accountController.buildLogin);
 router.get("/registration", accountController.buildRegistration);
+
 
 // Process the registration data
 router.post(

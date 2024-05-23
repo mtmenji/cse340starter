@@ -295,6 +295,35 @@ main h1 {
   margin: 10px 0 10px 0;
 }
 
+/****************************** Edit Inventory View ******************************/
+#editInventory-section {
+  display: flex;
+  justify-content: center;
+}
+
+#editInventory-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid black;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  font-size: 20px;
+  width: 90%;
+}
+
+#editInventory-section form > textarea, select {
+  width: 90%;
+  margin: 10px 0 10px 0;
+}
+
+#editInventory-section form > button {
+  width: 50%;
+  margin: 10px 0 10px 0;
+}
+
 /****************************** FOOTER ******************************/
 footer {
   padding-left: 10px;
