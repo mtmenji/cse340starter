@@ -12,6 +12,7 @@ router.get("/login", accountController.buildLogin);
 router.get("/registration", accountController.buildRegistration);
 
 
+
 // Process the registration data
 router.post(
     "/registration",
@@ -29,5 +30,13 @@ router.post(
   },
   utilities.handleErrors(accountController.accountLogin)
 )
+
+// Process the logout attempt
+router.get(
+  '/logout',
+  (req, res) => {
+    res.clearCookie('jwt');
+    res.redirect('/');
+});
 
 module.exports = router;
