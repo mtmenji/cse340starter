@@ -34,11 +34,28 @@ async function buildRegistration(req, res, next) {
 * *************************************** */
 async function buildAccountManagement(req, res, next) {
   let nav = await utilities.getNav()
+  let accountData = res.locals.accountData
   res.render("account/account-management", {
     title: "Registration",
     nav,
+    accountData,
     errors: null,
   })
+}
+
+/* ****************************************
+*  Deliver update account view
+* *************************************** */
+async function buildAccountUpdate(req, res, next) {
+  let nav = await utilities.getNav();
+  let accountId = req.params.id;
+  let accountData = await accModel.getAccountById(accountId);
+  res.render("account/update-account", {
+    title: "Update Account Information",
+    nav,
+    accountData,
+    errors: null,
+  });
 }
 
 /* ****************************************
@@ -125,6 +142,9 @@ async function accountLogin(req, res) {
   }
 }
 
+/* ****************************************
+ *  Check if the account is an employee or admin
+ * ************************************ */
 function checkIfEmployed(req, res, next) {
   if (req.cookies.jwt) {
     jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, function (err, accountData) {
@@ -134,7 +154,7 @@ function checkIfEmployed(req, res, next) {
         return res.redirect("/account/login");
       }
       // Check if the account type is Employee or Admin
-      if (accountData.accountType === "Employee" || accountData.accountType === "Admin") {
+      if (accountData.account_type === "Employee" || accountData.account_type === "Admin") {
         res.locals.accountData = accountData;
         res.locals.loggedin = true;
         next();
@@ -149,4 +169,4 @@ function checkIfEmployed(req, res, next) {
   }
 }
 
-module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin, checkIfEmployed }
+module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin, checkIfEmployed, buildAccountUpdate }
