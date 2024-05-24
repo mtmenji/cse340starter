@@ -34,7 +34,7 @@ async function buildRegistration(req, res, next) {
 * *************************************** */
 async function buildAccountManagement(req, res, next) {
   let nav = await utilities.getNav()
-  res.render("account/accountManagement", {
+  res.render("account/account-management", {
     title: "Registration",
     nav,
     errors: null,
@@ -125,4 +125,28 @@ async function accountLogin(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin }
+function checkIfEmployed(req, res, next) {
+  if (req.cookies.jwt) {
+    jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, function (err, accountData) {
+      if (err) {
+        req.flash("notice", "Please log in to access this page.");
+        res.clearCookie("jwt");
+        return res.redirect("/account/login");
+      }
+      // Check if the account type is Employee or Admin
+      if (accountData.accountType === "Employee" || accountData.accountType === "Admin") {
+        res.locals.accountData = accountData;
+        res.locals.loggedin = true;
+        next();
+      } else {
+        req.flash("notice", "You do not have permission to access this page.");
+        return res.redirect("/account/");
+      }
+    });
+  } else {
+    req.flash("notice", "Please log in to access this page.");
+    res.redirect("/account/login");
+  }
+}
+
+module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin, checkIfEmployed }
