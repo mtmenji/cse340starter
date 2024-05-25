@@ -353,13 +353,38 @@ main h1 {
   margin: 10px 0 10px 0;
 }
 
+/****************************** Update Account View ******************************/
+#updateAccount-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#updateAccount-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  font-size: 20px;
+  width: 90%;
+  padding-top: 2vh;
+}
+
+#updateAccount-section form > button {
+  width: 50%;
+  margin: 10px 0 10px 0;
+}
+
 /****************************** FOOTER ******************************/
 footer {
   padding-left: 10px;
   padding-top: 25px;
 }
 
-/*********************************** Larger Views ***********************************/
+/*************************************************************************** Larger Views ***************************************************************************/
 @media (min-width: 641px) {
 #checker {
   display: block;
@@ -422,6 +447,16 @@ nav ul {
 /****************************** Management View ******************************/
 #management-section li:hover {
   font-weight: bold;
+}
+
+/****************************** Update Account View ******************************/
+#updateAccount-section {
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#updateAccount-section form {
+  width: fit-content;
 }
 
 }

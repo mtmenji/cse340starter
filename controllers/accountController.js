@@ -1,4 +1,3 @@
-const index = require("../utilities/index")
 const utilities = require("../utilities/")
 const accModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
@@ -49,11 +48,13 @@ async function buildAccountManagement(req, res, next) {
 async function buildAccountUpdate(req, res, next) {
   let nav = await utilities.getNav();
   let accountId = req.params.id;
-  let accountData = await accModel.getAccountById(accountId);
-  res.render("account/update-account", {
+  let accountData = res.locals.accountData
+  let accountDataById = await accModel.getAccountById(accountId);
+  res.render("account/account-update", {
     title: "Update Account Information",
     nav,
     accountData,
+    accountDataById,
     errors: null,
   });
 }
@@ -169,4 +170,84 @@ function checkIfEmployed(req, res, next) {
   }
 }
 
-module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin, checkIfEmployed, buildAccountUpdate }
+/* ****************************************
+*  Process Account Update
+* *************************************** */
+async function updateAccount(req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, account_firstname, account_lastname, account_email } = req.body;
+  const updateResult = await accModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
+
+  if (updateResult) {
+    const updatedAccountData = await accModel.getAccountById(account_id);
+    delete updatedAccountData.account_password;
+
+    const accessToken = jwt.sign(updatedAccountData, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 3600})
+    if (process.env.NODE_ENV === "development") {
+      res.cookie("jwt", accessToken, {httpOnly: true, maxAge: 3600 * 1000});
+    } else {
+      res.cookie("jwt", accessToken, {httpOnly: true, secure: true, maxAge: 3600 * 1000});
+    }
+
+    req.flash("notice", "Account information updated successfully.");
+    res.redirect("/account/");
+  } else {
+    req.flash("notice", "Failed to update account information.");
+    res.status(500).render("account/account-update", {
+      title: "Update Account Information",
+      nav,
+      accountData: { account_id, account_firstname, account_lastname, account_email },
+      errors: null,
+    });
+  }
+}
+
+/* ****************************************
+*  Process Change Password
+* *************************************** */
+async function changePassword(req, res) {
+  let nav = await utilities.getNav();
+  const { current_password, new_password, confirm_new_password } = req.body;
+  const accountId = res.locals.accountData.account_id;
+
+  const accountData = await accModel.getAccountById(accountId);
+
+  if (await bcrypt.compare(current_password, accountData.account_password)) {
+    if (new_password === confirm_new_password) {
+      const hashedPassword = await bcrypt.hash(new_password, 10);
+      const updateResult = await accModel.updatePassword(accountId, hashedPassword);
+
+      if (updateResult) {
+        req.flash("notice", "Password changed successfully.");
+        res.redirect("/account/");
+      } else {
+        req.flash("notice", "Failed to change password.");
+        res.status(500).render("account/account-update", {
+          title: "Update Account Information",
+          nav,
+          accountData,
+          errors: null,
+        });
+      }
+    } else {
+      req.flash("notice", "New passwords do not match.");
+      res.status(400).render("account/account-update", {
+        title: "Update Account Information",
+        nav,
+        accountData,
+        errors: null,
+      });
+    }
+  } else {
+    req.flash("notice", "Current password is incorrect.");
+    res.status(400).render("account/account-update", {
+      title: "Update Account Information",
+      nav,
+      accountData,
+      errors: null,
+    });
+  }
+}
+
+
+module.exports = { buildLogin, buildRegistration, registerAccount, buildAccountManagement, accountLogin, checkIfEmployed, buildAccountUpdate, updateAccount, changePassword }
