@@ -1,0 +1,21 @@
+<title><%= title %></title>
+
+<h1>My Wishlist</h1>
+
+<% if (data.length > 0) { %>
+    <ul id="wishlist-display">
+      <% data.forEach(function(item) { %>
+        <li>
+          <form action="/inv/wishlist/delete" method="post">
+            <a href="/inv/detail/<%= item.inv_id %>" title="View <%= item.inv_make %> <%= item.inv_model %> details">
+              <%= item.inv_make %> <%= item.inv_model %>
+            </a>
+            <input type="hidden" name="inv_id" value="<%= item.inv_id %>">
+            <button type="submit">REMOVE</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p class="notice">Your wishlist is empty.</p>
+<% } %>

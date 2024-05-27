@@ -1,1 +1,21 @@
-<%- grid %>
+<% if (data.length > 0) { %>
+    <section id="detail-section">
+      <% data.forEach(function(vehicle) { %>
+        <h2><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+        <img src="<%= vehicle.inv_image %>" id="vehicle-image" alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %> on CSE Motors" />
+        <div id="more-details">
+          <p>Description: <%= vehicle.inv_description %></p>
+          <p>Color: <%= vehicle.inv_color %></p>
+          <p>Mileage: <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %></p>
+          <span>Price: $<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></span>
+          <form action="/inv/wishlist/add" method="post">
+            <input type="hidden" name="inv_id" value="<%= vehicle.inv_id%>">
+            <button type="submit">Add to Wishlist</button>
+          </form>
+        </div>
+
+      <% }); %>
+    </section>
+  <% } else { %>
+    <p class="notice">Sorry, no matching vehicles could be found.</p>
+  <% } %>

@@ -4,6 +4,7 @@ const router = new express.Router()
 const utilities = require("../utilities/")
 const invController = require("../controllers/invController")
 const accountController = require("../controllers/accountController")
+const wishController = require("../controllers/wishlistController")
 const regValidate = require('../utilities/classification-validation')
 const regValidate1 = require('../utilities/inventory-validation')
 
@@ -17,6 +18,7 @@ router.get("/add-inventory", accountController.checkIfEmployed, invController.bu
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 router.get("/edit/:invId", accountController.checkIfEmployed, utilities.handleErrors(invController.buildEditInventoryView)) //Edit Inventory Page
 router.get("/delete/:invId", accountController.checkIfEmployed, utilities.handleErrors(invController.buildDeleteInventoryView)) //Delete inventory item
+router.get("/wishlist", utilities.checkLogin, utilities.handleErrors(wishController.buildWishlistView))
 
 
 // Process the classification addition
@@ -44,5 +46,17 @@ router.post(
 router.post(
     '/delete-confirm/',
     utilities.handleErrors(invController.deleteInventory))
+
+// Process the wish list addition
+router.post(
+    '/wishlist/add',
+    utilities.handleErrors(wishController.addToWishlist)
+)
+
+// Delete an item from the wish list
+router.post(
+    '/wishlist/delete',
+    utilities.handleErrors(wishController.deleteFromWishlist)
+)
 
 module.exports = router;
